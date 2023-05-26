@@ -1,0 +1,35 @@
+
+#lang racket
+
+; Name : Jai
+
+; ID : 20045247
+
+;This functin takes in a list removes the non integral values and assigns grades to the integral values from 0-100. Note the function does not tell us whether the person is pass or fail will tell us the grade on the basis of the value.
+
+;lists with grades
+(define a'("J+" "I+" "H+" "G+" "F+" "E+" "D+" "C+" "B+" "A+"))
+(define b'("J-" "I-" "H-" "G-" "F-" "E-" "D-" "C-" "B-" "A-"))
+(define c'("J" "I" "H" "G" "F" "E" "D" "C" "B" "A"))
+
+; testdata contains non interger values as well to prove that non integer are ignored in the code
+(define testData '(95 #t 1 "Jedward" 97 100 91 137))
+
+; Code to remove non-numeric values
+(define getnums (lambda (x) (if (integer? x) x #f)))
+
+; I am only using one function which checks for interger values and assigns grades accordingly. Note the code does not say whether the person is pass or fail but simply gives a grade.
+(define grade  (lambda (x)
+                 (if (> x 100)
+                     (list x "Wrong Input")
+                     (if (= x 100)
+                         (list x "A+")
+                         (if (or(=(remainder x 10)0)(=(remainder x 10)1)(=(remainder x 10)2))
+                             (list x (list-ref b (quotient x 10)))
+                             (if (>(remainder x 10)6)
+                                 (list x (list-ref a (quotient x 10)))
+                                 (if (<=(remainder x 10)6)
+                                     (list x (list-ref c (quotient x 10)))
+                                     (list x "Wrong Input"))))))))
+; map the function on the testdata
+(map grade (filter identity (map getnums testData)))
